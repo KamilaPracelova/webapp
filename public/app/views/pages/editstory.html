@@ -1,0 +1,45 @@
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Edit Story</h2>
+        <h3 class="section-subheading text-muted">This page allows you to edit stories.</h3>
+    </div>
+</div>
+<!-- Heading -->
+
+<br>
+
+<div class="well">
+{{storyedit.text}}
+</div>
+
+<br>
+
+<!-- Bootstrap Navigation Tabs -->
+<ul class="nav nav-tabs">
+    <!-- Title Tab -->
+    <li role="presentation" ng-click="storyedit.titlePhase();" ng-class="titleTab"><a href="#">Title</a></li>
+    <!-- Usertitle Tab -->
+    <li role="presentation" ng-click="storyedit.subtitlePhase();" ng-class="subtitleTab"><a href="#">Subtitle</a></li>
+    <!-- E-mail Tab -->
+    <li role="presentation" ng-click="storyedit.descriptionPhase();" ng-class="descriptionTab"><a href="#">Description</a></li>
+    <!-- Permission Tab -->
+</ul>
+<!-- Bootstrap Navigation Tabs -->
+ <form title="storyedit.titleForm" ng-show="storyedit.phase1" ng-submit="storyedit.updateTitle(newTitle, storyedit.titleForm.title.$valid)" novalidate>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div ng-class="{ 'has-success':(storyedit.titleForm.title.$valid && !storyedit.titleForm.title.$pristine), 'has-error':(!storyedit.titleForm.title.$valid) }">
+                    <!-- Title Input -->
+                    <label>Current Title:</label>
+                    <input ng-disabled="storyedit.disabled" class="form-control" type="text" name="title" placeholder="please enter title" ng-model="newTitle" ng-maxlength="25" required >
+                    <!-- Title Validation -->
+                </div>
+                <br>
+                <!-- Update Button -->
+                <button ng-disabled="storyedit.disabled" class="btn btn-primary" type="submit">Update</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/"> <!-- use application without # -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Main Angular Files -->
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-animate.js"></script>
+
+    <!-- Angular Config/Routes -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!-- Angular Controllers -->
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/storyCtrl.js"></script>
+
+    <!-- Angular Directives
+    <script type="text/javascript" src="app/directives/fileModel.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>-->
+
+    <!-- Angular Services -->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+    <script src="app/services/storyServices.js"></script>
+
+    <!--<script src="app/services/uploadFileServices.js"></script> -->
+
+
+    <!-- Cascade Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet" />
+
+    <title>WEBAPPLICATION</title>
+
+</head>
+
+  <!-- ng-app="userApp" use angular application -->
+    <!-- ng-controller here because we want it in every view -->
+        <!-- ng-show="main.loadme" ng-cloak -> do not show loading nav bar-->
+<body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">DIPLOMOVKA</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden active">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="">
+                        <a class="page-scroll" href="/">Home</a>
+                    </li>
+                    <li class="">
+                        <a ng-show="!main.isLoggedIn" class="page-scroll" href="/login">Login</a>
+                    </li>
+                    <li class="">
+                        <a ng-show="!main.isLoggedIn" class="page-scroll" href="/register">Register</a>
+                    </li>
+                    <li class="">
+                        <a ng-show="main.isLoggedIn" class="page-scroll" href="#" ng-click="main.logout();">Logout</a>
+                    </li>
+                    <li class="">
+                        <a ng-show="main.isLoggedIn && main.authorized" class="page-scroll" href="/management">Management</a>
+                    </li>
+                    <li class="dropdown">
+                          <a ng-show="main.isLoggedIn" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ main.username }} <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/profile">Profile</a></li>
+                            <li><a href="/gallery">Gallery</a></li>
+                            <li><a href="/images">Images</a></li>
+                            <!--<li><a href="/upload">Upload</a></li> -->
+                            <li><a href="/test">All</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="/story">Story</a></li>
+                            <li><a href="/createstory">Create Story</a></li>
+                            <li><a ng-show="main.isLoggedIn" href="/allstories">All stories</a></li>
+                          </ul>
+                        </li>
+                    <li class="">
+                        <a ng-show="main.isLoggedIn" class="page-scroll" href="/profile">Hello {{ main.username }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header ng-show="main.home">
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="" data-slide-to="0" class="active"></li>
+    <li data-target="" data-slide-to="1"></li>
+    <li data-target="" data-slide-to="2"></li>
+    <li data-target="" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+        <div class="slide-1"></div>
+      <div class="hero">
+        <hgroup>
+            <h1>DIPLOMOVKA</h1>        
+            <h3>Objavujte umenie novým spôsobom.</h3>
+                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
+                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
+                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
+                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
+        </hgroup>
+        <button class="btn btn-hero btn-lg" role="button">See all features</button>
+      </div>
+      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
+    </div>
+
+    <div class="item">
+         <div class="slide-2"></div>
+      <div class="hero">
+        <hgroup>
+            <h1>DIPLOMOVKA</h1>        
+            <h3>Vytvárajte vlastné stories.</h3>
+                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
+                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
+                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
+                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
+        </hgroup>
+        <button class="btn btn-hero btn-lg" role="button">See all features</button>
+      </div>
+      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
+    </div>
+
+    <div class="item">
+         <div class="slide-3"></div>
+      <div class="hero">
+        <hgroup>
+            <h1>DIPLOMOVKA</h1>        
+            <h3>Zdieľajte Vaše obľúbené diela s vašími priateľmi</h3>
+                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
+                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
+                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
+                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
+        </hgroup>
+        <button class="btn btn-hero btn-lg" role="button">See all features</button>
+      </div>
+      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
+    </div>
+
+    <div class="item">
+         <div class="slide-4"></div>
+      <div class="hero">
+        <hgroup>
+            <h1>DIPLOMOVKA</h1>        
+            <h3>Get start your next awesome project</h3>
+                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
+                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
+                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
+                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
+        </hgroup>
+        <button class="btn btn-hero btn-lg" role="button">See all features</button>
+      </div>
+      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
+    </div>
+  </div>
+</div>
+</div>
+    </header>
+
+    <section id="services"> 
+        <div class="container">
+            <div class="row">
+
+                <!-- Angular View -->
+                <div ng-view></div>
+                <!-- Angular View -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid Section -->
+    <section ng-show="main.home" id="portfolio" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+
+                    <h2 class="section-heading">About This Page</h2>
+                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="glyphicon glyphicon-film"></span>
+                    <h4 class="service-heading">YouTube</h4>
+                    <p class="text-muted">Ensure you check out the YouTube video series associated with this web page. Visit:
+                        <a href="https://www.youtube.com/playlist?list=PL3vQyqzqjZ637sWpKvniMCxdqZhnMJC1d" target="_blank">https://www.youtube.com/playlist?list=PL3vQyqzqjZ637sWpKvniMCxdqZhnMJC1d</a>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <span class="glyphicon glyphicon-usd"></span>
+                    <h4 class="service-heading">Facebook</h4>
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="glyphicon glyphicon-save"></span>
+                    <h4 class="service-heading">Github</h4>
+                    <p class="text-muted">Ensure you check out the GitHub page associated with this web page. Visit:
+                        <a href="https://github.com/gugui3z24" target="_blank">https://github.com/gugui3z24</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer ng-show="main.home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright © David Acosta</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="http://www.facebook.com"><img src="http://www.ln.edu.hk/mkt/mscmib/Facebook-Icon.png" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
+                        </li>
+                        <li><a href="http://www.twitter.com"><img src="https://visibility.sk/blog/wp-content/uploads/twitter.png" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
+                        </li>
+                        <li><a href="http://www.instagram.com"><img src="http://www.techcracky.com/wp-content/uploads/2016/05/Logo-Baru-Instagram.jpg" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
+                        </li>
+                        <li><a href="http://www.instagram.com"><img src="http://www.wildsocialmedia.com/wp-content/uploads/2015/07/google-plus.png" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BootstrapJS Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button ng-hide="main.hideButton" type="button" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>
+                    <!-- Modal Header -->
+                    <h4 class="modal-title">{{ main.modalHeader }}</h4>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <p>{{ main.modalBody }}</p>
+                    <div ng-show="main.hideButton" class="dizzy-gillespie"></div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Modal 'Yes' & 'No' Buttons -->
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- BootstrapJS Modal -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery-3.1.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+</body>
+
+</html>
