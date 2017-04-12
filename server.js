@@ -9,7 +9,6 @@ var appRoutes = require('./app/routes/api')(router); // Import the application e
 var path = require('path'); // Import path module
 var passport = require('passport'); // Express-compatible authentication middleware for Node.js.
 var social = require('./app/passport/passport')(app, passport); // Import passport.js End Points/API
-var Story = require('./app/models/story'); // Import User Model
 
 app.use(morgan('dev')); // Morgan Middleware
 app.use(bodyParser.json()); // Body-parser middleware
@@ -27,23 +26,6 @@ mongoose.connect('mongodb://localhost:27017/webapp', function(err) {
         console.log('Successfully connected to MongoDB'); // Log to console if able to connect to database
     }
 });
-
-
-//   app.get('/story/:id', function(req, res) {
-//     console.log(req.params.id); // Log the ID to the console, to ensure the back end is receiving it. Then compare it to what you have in the database to make sure you have a match.
-//     Story.findOne({ _id: req.params.id }, function(err, story) {
-//         if (err) {
-//             throw (err);
-//         } else {
-//             // Don't always return success, check to make sure the story exists first before returning it.
-//             if (!story) {
-//                 res.json({ success: false, message: 'That story was not found.' });
-//             } else {
-//                 res.json({ success: true, story: story });
-//             }
-//         }
-//     });
-// });
 
 // Set Application Static Layout
 app.get('*', function(req, res) {

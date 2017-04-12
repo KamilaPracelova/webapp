@@ -1,0 +1,92 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><center>Pridať story</center></h1>
+    </div>
+</div>
+
+<section id="fh5co-projects">
+			<div class="container">
+				<div class="row row-bottom-padded-md">
+					<div class="text-center">
+<form ng-submit="storycreate.createStory();" class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="story_title" >Názov Story</label>  
+  <div class="col-md-4">
+  <input class="form-control" id="story_title" name="story_title" type="text" placeholder="Názov Story" maxlength="50" ng-model="storycreate.storyData.story_title">
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="story_subtitle">Podnázov Story</label>
+  <div class="col-md-4">                     
+    <input class="form-control" id="story_subtitle" name="story_subtitle" placeholder="Podnázov Story" maxlength="150" ng-model="storycreate.storyData.story_subtitle">
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="story_description">Opis Story</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="story_description" name="story_description" placeholder="Opis Story" ng-model="storycreate.storyData.story_description"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="story_title_image">Titulný obrázok</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="story_title_image" name="story_title_image" placeholder="url titulného obrázku" ng-model="storycreate.storyData.story_title_image"></textarea>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="name">Dog</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="name" name="name" placeholder="url titulného obrázku" ng-model="storycreate.storyData.name"></textarea>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="surname">Dog</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="surname" name="surname" placeholder="url titulného obrázku" ng-model="storycreate.storyData.surname"></textarea>
+  </div>
+</div>
+
+<br>
+<div class="centerize">
+    <button class="btn btn-primary" type="submit">Vytvoriť Story</button>
+</div>
+</fieldset>
+</form>
+
+<br>
+
+<div class="row show-hide-message" ng-show="storycreate.successMsg">
+    <div class="alert alert-success">{{ storycreate.successMsg }}</div>
+</div>
+
+<br>
+
+<div class="row show-hide-message" ng-show="storycreate.errorMsg">
+  <div class="alert alert-danger">{{ storycreate.errorMsg }}</div>
+</div>
+					</div>
+				</div>
+				<div class="row">
+          				</div>
+			</div>
+		</section>

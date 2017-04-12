@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <!-- use application without # -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM"></script>
+
+    <!-- Main Angular Files -->
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-animate.js"></script>
+
+    <!-- Angular Config/Routes -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!-- Angular Controllers -->
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+    <script src="app/controllers/storyCtrl.js"></script>
+    <script src="app/controllers/objectCtrl.js"></script>
+    <script src="app/controllers/addCtrl.js"></script>
+    <script src="app/controllers/timeline.js"></script>
+
+
+    <!-- Angular Services -->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+    <script src="app/services/storyServices.js"></script>
+    <script src="app/services/objectServices.js"></script>
+    <script src="app/services/roomServices.js"></script>
+
+    <!--<script src="app/services/gservice.js"></script>-->
+
+
+    <!--<script src="http://maps.google.com/maps/api/js"></script>
+    <script src="script-tags-for-development.js"></script>-->
+
+    <title>WEBAPPLICATION</title>
+
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM&callback=initMap"async defer></script>-->
+
+    <!--<script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>-->
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- Squad theme CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="color/default.css" rel="stylesheet">
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom" ng-app="userApp" ng-controller="mainCtrl as main">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="load"></div>
+    </div>
+
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+
+                <!-- Search -->
+                <div class="container-2">
+                    <span class="icon"><a href="/allobjects"><i class="fa fa-search"></a></i></span>
+                    <input type="search" id="search" placeholder="Hľadať" / ng-model="searchObject">
+                    <!--<input type="submit" style="display:none"/>-->
+                    <!--<a href="/allobjects">
+                <button type="button" class="btn btn-default">adsa</button>-->
+                </div>
+
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#intro">
+                    <h1>Aplikácia</h1>
+                </a>-->
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Domov</a></li>
+                    <!--<li><a href="#service">About</a></li>-->
+                    <li><a href="/allobjects">Umelecké objekty</a></li>
+                    <li><a href="/allcreators">Autori</a></li>
+                    <li><a ng-show="!main.isLoggedIn" href="/login">Prihlásiť sa</a></li>
+                    <li><a ng-show="!main.isLoggedIn" href="/register">Registrovať sa</a></li>
+                    <!--<li><a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Logout</a></li>-->
+                    <li><a ng-show="main.isLoggedIn && main.authorized" href="/management">Management</a></li>
+                    <li class="dropdown">
+                        <a ng-show="main.isLoggedIn" href="#" class="dropdown-toggle" data-toggle="dropdown">{{ main.username }}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="#">Obľúbené</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createstory">Vytvoriť story</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/allstories">Moje story</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createobject">Vytvoriť objekt</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Profil</li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/profile">Profil</a></li>
+                            <li><a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Odhlásiť sa</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Section: intro -->
+    <section id="intro" class="intro" ng-show="main.home">
+
+        <div class="slogan">
+            <div class="wow fadeInUp" data-wow-delay="0.2s">
+
+                <h2>Vitajte na stránke </h2>
+                <h4>pre prezentovanie kultúrneho dedičstva</h4>
+            </div>
+
+            <!--<div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <input id="pac-input" class="controls" type="text" placeholder="Hľadať umelecký objekt" ng-model="searchObject">
+                    </div>
+                </div>
+            </div>-->
+
+
+            <!--<div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <form action="" method="get">
+                            <input id="pac-input" class="controls" type="text" placeholder="Hľadať umelecký objekt" ng-model="searchObject">
+                            <input type="submit" style="display:none"/>
+                        </form>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+        <div class="page-scroll">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+
+            <a href="#service" class="btn btn-circle">
+                <i class="fa fa-angle-double-down animated"></i>
+            </a>
+                        </div>
+        </div>
+
+    </section>
+    <!-- /Section: intro -->
+
+    <!-- Section: services -->
+    <section id="service" class="home-section text-center bg-gray" ng-show="main.home">
+
+        <div class="heading-about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="section-heading">
+                                <h2>Prezerajte si kultúrne objekty...</h2>
+                                <ng-map center="[40.74, -74.18]"></ng-map>
+
+
+                                <i class="fa fa-2x fa-angle-down"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-5">
+                    <hr class="marginbot-50">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-1.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Print</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-2.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Web Design</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-3.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Photography</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wow fadeInRight" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-4.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Cloud System</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Section: services -->
+
+    <!-- Section: contact -->
+    <section id="contact" class="home-section text-center" ng-show="main.home">
+        <div class="heading-contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="section-heading">
+                                <h2>...a vytvárajte si svoje vlastné stories</h2>
+                                <i class="fa fa-2x fa-angle-down"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-5">
+                    <hr class="marginbot-50">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="boxed-grey">
+
+                        <div id="sendmessage">Your message has been sent. Thank you!</div>
+                        <div id="errormessage"></div>
+                        <form id="contact-form" action="" method="post" role="form" class="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">
+                                Name</label>
+                                        <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
+                                        />
+                                        <div class="validation"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">
+                                Email Address</label>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"
+                                            />
+                                            <div class="validation"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subject">
+                                Subject</label>
+                                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"
+                                        />
+                                        <div class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">
+                                Message</label>
+                                        <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                        <div class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-skin pull-right" id="btnContactUs">
+                            Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="widget-contact">
+                        <h5>Main Office</h5>
+
+                        <address>
+                            <strong>Squas Design, Inc.</strong><br> Tower 795 Folsom Ave, Beautiful Suite 600<br> San Francisco,
+                            CA 94107<br>
+                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                        </address>
+
+                        <address>
+                            <strong>Email</strong><br>
+                            <a href="mailto:#">email.name@example.com</a>
+                        </address>
+                        <address>
+                            <strong>We're on social networks</strong><br>
+                            <ul class="company-social">
+                                <li class="social-facebook"><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li class="social-twitter"><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li class="social-dribble"><a href="#" target="_blank"><i class="fa fa-dribbble"></i></a></li>
+                                <li class="social-google"><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </address>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Section: contact -->
+
+    <!--<section id="services" lass="home-section text-center">-->
+    <div class="container">
+        <div class="row">
+            <!--<div class="wow bounceInDown" data-wow-delay="0.4s">-->
+            <div class="section-heading">
+                <div ng-view></div>
+                <!--</div>-->
+            </div>
+        </div>
+        <!--</div>
+    </section>-->
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="page-scroll marginbot-30">
+                                <a href="#intro" id="totop" class="btn btn-circle">
+                                    <i class="fa fa-angle-double-up animated"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                        <!--<p>&copy;SquadFREE. All rights reserved.</p>-->
+                                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+
+                        <div class="credits">
+                            <div class="footerrr">
+                                <div class="containerrr">
+                                    <a href='#'><i class="fa fa-google-plus fa-3x fa-fw"></i></a>
+                                    <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+                                    <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+                                    <a href='#'><i class="fa fa-pinterest fa-3x fa-fw"></i></a>
+                                    </span>
+                                </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Core JavaScript Files -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.easing.min.js"></script>
+        <script src="js/jquery.scrollTo.js"></script>
+        <script src="js/wow.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="js/custom.js"></script>
+        <!--<script src="contactform/contactform.js"></script>-->
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM&callback=initMap"async defer></script>-->
+
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM"></script>-->
+
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+    
+    #map {
+        height: 420px;
+        max-width: 100%;
+    }
+    
+    .infoWindowContent {
+        font-size: 14px !important;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+    
+    h2 {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+</style>
+
+<!-- Portfolio Item Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" ng-show="main.isLoggedIn">{{objectTitle}}
+            <small ng-show="main.isLoggedIn">{{objectCreator}}</small>
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+
+<!-- Portfolio Item Row -->
+<div class="row">
+
+    <div class="col-md-8">
+        <img id="myImg" ng-src="{{objectMediaObject}}" class="img-responsive" alt="">
+        <!--<img ng-src="{{objectMediaObject}}" class="img-responsive" alt="">-->
+
+        <div id="myModal" class="modal">
+            <span class="close">×</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <!--<h3>
+            <center>Popis diela</center>
+        </h3>
+        <p>{{objectDescription}}</p>-->
+        <h3>
+            <center>Informácie o objekte</center>
+        </h3>
+        <ul><k>
+            Názov diela:{{objectTitle}}<br>            
+            Autor diela: {{objectCreator}}<br>
+            Rok vzniku {{objectYear}}<br>
+            Storočie: {{objectPeriod}}<br>
+            Umelecký smer: {{objectArtMovement}}<br>
+            Klasifikácia: {{objectClassification}}<br>
+            Výtvarný druh: {{objectWorkType}}<br>
+            Rozmery: {{objectMeasurements}}<br>
+            Materiály: {{objectMaterials}}<br>
+            Techniky: {{objectTechniques}}<br>                     
+            Autorské práva: {{objectAuthorsRights}}<br>
+            Vlastnícke práva: {{objectPropertyRights}}<br>
+            Umiestnenie: {{objectPlacement}}<br>
+        </k></ul>
+    </div>
+</div>
+<!-- /.row -->
+<br>
+<!--<div class="containerr">
+	<ul>
+	  <li>
+      <span>29 min</span>
+	    <div>This is the latest news</div>
+	  </li>
+    <li class="selected">
+      <span>{{objectCreation_date}}</span>
+	    <div>This is the second latest news</div>
+	  </li>
+    <li>
+      <span>42 min</span>
+	    <div>This is the third latest news</div>
+	  </li>
+	</ul>
+</div>-->
+
+<div>
+    <div id="map"></div>
+    <div id="class">
+        <a href="#" ng-click="openInfoWindow($event, marker)">{{marker.title}}</a>
+    </div>
+</div>
+
+<!-- Related Projects Row -->
+<div class="row">
+
+    <div class="col-lg-12">
+        <h3 class="page-header">Podobné objekty</h3>
+    </div>
+
+    <div class="col-sm-3 col-xs-6" ng-repeat="object in objects  | limitTo:4">
+        <a href="#">
+            <img class="img-responsive portfolio-item" src="{{objectMediaObject}}" alt="">
+        </a>
+    </div>
+</div>
+<!-- /.row -->

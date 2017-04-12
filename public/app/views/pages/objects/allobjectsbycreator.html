@@ -1,0 +1,29 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+</style>
+
+<!-- Portfolio Item Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">{{filterCreator}}
+        </h1>
+    </div>
+</div>
+
+<div class="col-md-12">
+
+
+    <div id="columns">
+        <figure ng-repeat="object in objects | filter: filterCreator ">
+            <!--<button>Like</button>-->
+           <a href="/object/{{ object._id }}"><img src="{{ object.media_object }}"></a>
+
+            <!--<button ng-click="fcia()">OK</button>-->
+
+            <figcaption><b>{{ object.title }}</b></figcaption>
+            <figcaption ng-model="object.creator" >{{ object.creator }}</figcaption>
+                <button ng-model="object.creator">OK</button>
+    </div>
+</div>

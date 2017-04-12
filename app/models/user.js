@@ -65,26 +65,13 @@ var passwordValidator = [
     })
 ];
 
-//var StorySchema = new Schema({
-  //  user: { type: Schema.ObjectId, ref: 'User' },
-  //  emaill: { type: String, lowercase: true }
-    //emaill: [{ type: String, ref: 'User' }]
-    //user: { type: Schema.ObjectId, ref: 'User', required: true},
-//});
-
 // User Mongoose Schema
 var UserSchema = new Schema({
     name: { type: String, required: true, validate: nameValidator },
     username: { type: String, lowercase: true, required: true, unique: true, validate: usernameValidator },
     password: { type: String, required: true, validate: passwordValidator, select: false },
     email: { type: String, required: true, lowercase: true, unique: true, validate: emailValidator },
-    ///active: { type: Boolean, required: true, default: false },
-    ///temporarytoken: { type: String, required: true },
-    ///resettoken: { type: String, required: false },
     permission: { type: String, required: true, default: 'admin' },
-    //stories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    //stories : [{ type: Schema.Types.ObjectId, ref: 'Story' }]
-    stories: [StorySchema]
 });
 
 // Middleware to ensure password is encrypted before saving user to database

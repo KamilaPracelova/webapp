@@ -1,0 +1,90 @@
+<style>
+body {
+    margin-top: 100px;
+}
+</style>
+
+<!-- Heading -->
+<div class="row text-center">
+    <div class="container">
+        <h2 class="section-heading">Search Engine</h2>
+        <h3 class="section-subheading text-muted">This page allows you to perform an advanced search of users in the database.</h3>
+    </div>
+</div>
+<!-- Heading -->
+
+<br>
+
+<!-- Loading Icon (Bootstrap) -->
+<div class="jumbotron text-center" ng-show="objectall.loading">
+    <span class="glyphicon glyphicon-repeat spinner"></span>
+    <p>Loading....</p>
+</div>
+<!-- Loading Icon (Bootstrap) -->
+
+<br>
+
+<!-- Username Search Box -->
+<div class="navbar-form">
+    <div class="form-group">
+        <input type="text" class="form-control" name="searchByTitle" placeholder="search by..." ng-model="searchByTitle">
+    </div>
+    <button type="button" class="btn btn-default">Title</button>
+</div>
+
+<!-- E-mail Search Box -->
+<div class="navbar-form">
+    <div class="form-group">
+        <input type="text" class="form-control" name="searchByCreator" placeholder="search by..." ng-model="searchByCreator">
+    </div>
+    <button type="button" class="btn btn-default">Creator</button>
+</div>
+
+<!-- Search Button -->
+<div class="navbar-form">
+    <button type="button" ng-click="objectall.advancedSearchObject(searchByTitle, searchByCreator);" class="btn btn-default">Search</button>
+    <br>
+    <br>
+    <!-- Sort Order Dropdown Menu -->
+    <div class="btn-group">
+        <button type="button" class="btn btn-danger">Sort by</button>
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <!-- First Dropdown Option: Username -->
+            <li><a ng-click="objectall.sortOrder('title');" href="#">Title</a></li>
+            <!-- Second Dropdown Option: E-mail -->
+            <li><a ng-click="objectall.sortOrder('creator');" href="#">Creator</a></li>
+        </ul>
+    </div>
+</div>
+
+<br>
+
+<!-- Search Results -->
+<div ng-show="objectall.searchLimit === undefined">
+    <p><strong>Results: </strong>{{ (objectall.objects | filter: advancedSearchObjectFilter | limitTo: objectall.searchLimit).length }}</p>
+</div>
+
+<!-- Sort Order Notification -->
+<div ng-show="objectall.sort">
+    <p><strong>Sort by: </strong>{{ objectall.sort }}</p>
+</div>
+
+<br>
+
+
+
+<div id="columns">
+  <figure ng-repeat="object in objectall.objects| filter: advancedSearchObjectFilter | orderBy: objectall.sort">
+  <img src="{{ object.media_object }}">
+	<figcaption><a href="/object/{{ object._id }}">{{ object.title }}</figcaption>
+	</figure>
+</div>
+
+<!-- User objectall Table -->
+
+<br>
+<br>

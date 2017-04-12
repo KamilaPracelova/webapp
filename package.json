@@ -15,6 +15,7 @@
   "author": "Kamila",
   "license": "ISC",
   "dependencies": {
+    "angular-timelinejs3": "^0.2.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.0",
     "express": "^4.14.1",

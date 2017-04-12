@@ -48,5 +48,10 @@ angular.module('userServices', [])
         return $http.put('/api/edit', id);
     };
 
+                    // Register story in database
+        userFactory.createFriend = function (friendData) {
+            return $http.post('/api/createfriend', friendData);
+        };
+
     return userFactory; // Return userFactory object
 });

@@ -1,0 +1,23 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+</style>
+
+<!-- Portfolio Item Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Všetky umelecké objekty
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+            
+<div id="columns">
+  <figure ng-repeat="like in filteredObjects | filter: searchFilterObject | filter: query | filter: searchObject">
+          <button>Like</button>
+  <img src="{{ object.media_object }}">
+    <figcaption><a href="/object/{{ object._id }}">{{ object.title }}</figcaption>
+	</figure>
+</div>
+</div>

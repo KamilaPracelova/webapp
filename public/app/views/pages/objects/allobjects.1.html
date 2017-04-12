@@ -1,0 +1,84 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+</style>
+
+
+
+<div>
+    <!--<div class="top">
+          Search: <input name="company" type="text" class="search-input" ng-model="query"/>
+      </div>-->
+
+    <section class="left" style="border-right:1px">
+        <div class="filter">
+            Title
+            <div>
+                <div ng-repeat="title in titleGroup">
+                    <b><input type="checkbox" ng-model="useTitle[title]"/>{{title}}</b>
+                    <span>({{ (filteredObjects | filter:query | filter:count('title', title)).length }})</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter">
+            Creator
+            <div>
+                <div ng-repeat="creator in creatorGroup">
+                    <b><input type="checkbox" ng-model="useCreator[creator]"/>{{creator}}</b>
+                    <span>({{ (filteredObjects | filter:query | filter:count('creator', creator)).length }})</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter">
+            Placement
+            <div>
+                <div ng-repeat="placement in placementGroup">
+                    <b><input type="checkbox" ng-model="usePlacement[placement]"/>{{placement}}</b>
+                    <span>({{ (filteredObjects | filter:query | filter:count('placement', placement)).length }})</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="right">
+        <div id="columns">
+            <figure ng-repeat="object in filteredObjects | filter:query">
+                <img src="{{ object.media_object }}">
+                <figcaption><a href="/object/{{ object._id }}">{{ object.title }}</figcaption>
+	        </figure>
+        </div>
+    </section>
+</div>
+
+
+    <div class="search-wrapper">
+		<form>
+			<input type="text" name="focus" required class="search-box" placeholder="Enter search term" />
+			<button class="close-icon" type="reset"></button>
+		</form>
+	</div>
+
+
+            <!-- Portfolio Item Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Všetky umelecké objekty
+                    <small>Subheading</small>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+
+<div id="columns">
+  <figure ng-repeat="object in objectall.objects | filter: searchFilterObject">
+  <img src="{{ object.media_object }}">
+	<figcaption><a href="/object/{{ object._id }}">{{ object.title }}</figcaption>
+	</figure>
+</div>

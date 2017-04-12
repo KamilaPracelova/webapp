@@ -1,0 +1,262 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+</style>
+
+<form ng-submit="objectcreate.createObject();" class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><center>Pridať kultúrny objekt</center></h1>
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="title" class="small">Názov objektu</label>  
+  <div class="col-md-4">
+  <input class="form-control" id="title" name="title" type="text" placeholder="Názov objektu" maxlength="50" ng-model="objectcreate.objectData.title">
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="creator">Autor objektu</label>
+  <div class="col-md-4">                     
+    <input class="form-control" id="creator" name="creator" placeholder="Priezvisko Meno" maxlength="150" ng-model="objectcreate.objectData.creator">
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="subject">Kľúčové slová</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="subject" name="subject" placeholder="kľúčové slovo 1, kľúčové slovo 2, ...." ng-model="objectcreate.objectData.subject"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="description">Opis objektu</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="description" name="description" placeholder="Opis objektu" ng-model="objectcreate.objectData.description"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="year">Rok vzniku</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="year" name="year" placeholder="napr. 1983" ng-model="objectcreate.objectData.year"></textarea>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="period">Storočie</label>
+  <div class="col-md-4">
+    <select id="period" name="period" class="form-control scrollable-menu" ng-model="objectcreate.objectData.period">
+      <option value="1. storočie, 1. polovica n.l">1. storočie, 1. polovica n.l</option>
+      <option value="1. storočie, 2. polovica n.l">1. storočie, 2. polovica n.l</option>
+      <option value="2. storočie, 2. polovica n.l">1. storočie, 2. polovica n.l</option>
+      <option value="2. storočie, 1. polovica n.l">2. storočie, 1. polovica n.l</option>
+      <option value="2. storočie, 2. polovica n.l">2. storočie, 2. polovica n.l</option>
+      <option value="3. storočie, 1. polovica n.l">3. storočie, 1. polovica n.l</option>
+      <option value="3. storočie, 2. polovica n.l">3. storočie, 2. polovica n.l</option>
+      <option value="4. storočie, 1. polovica n.l">4. storočie, 1. polovica n.l</option>
+      <option value="4. storočie, 2. polovica n.l">4. storočie, 2. polovica n.l</option>
+      <option value="5. storočie, 1. polovica n.l">5. storočie, 1. polovica n.l</option>
+      <option value="5. storočie, 2. polovica n.l">5. storočie, 2. polovica n.l</option>
+      <option value="6. storočie, 1. polovica n.l">6. storočie, 1. polovica n.l</option>
+      <option value="6. storočie, 2. polovica n.l">6. storočie, 2. polovica n.l</option>
+      <option value="7. storočie, 1. polovica n.l">7. storočie, 1. polovica n.l</option>
+      <option value="7. storočie, 2. polovica n.l">7. storočie, 2. polovica n.l</option>
+      <option value="8. storočie, 1. polovica n.l">8. storočie, 1. polovica n.l</option>
+      <option value="8. storočie, 2. polovica n.l">8. storočie, 2. polovica n.l</option>
+      <option value="9. storočie, 1. polovica n.l">9. storočie, 1. polovica n.l</option>
+      <option value="9. storočie, 2. polovica n.l">9. storočie, 2. polovica n.l</option>
+      <option value="10. storočie, 1. polovica n.l">10. storočie, 1. polovica n.l</option>
+      <option value="10. storočie, 2. polovica n.l">10. storočie, 2. polovica n.l</option>
+      <option value="11. storočie, 1. polovica n.l">11. storočie, 1. polovica n.l</option>
+      <option value="12. storočie, 2. polovica n.l">11. storočie, 2. polovica n.l</option>
+      <option value="12. storočie, 1. polovica n.l">12. storočie, 1. polovica n.l</option>
+      <option value="12. storočie, 2. polovica n.l">12. storočie, 2. polovica n.l</option>
+      <option value="13. storočie, 1. polovica n.l">13. storočie, 1. polovica n.l</option>
+      <option value="13. storočie, 2. polovica n.l">13. storočie, 2. polovica n.l</option>
+      <option value="14. storočie, 1. polovica n.l">14. storočie, 1. polovica n.l</option>
+      <option value="14. storočie, 2. polovica n.l">14. storočie, 2. polovica n.l</option>
+      <option value="15. storočie, 1. polovica n.l">15. storočie, 1. polovica n.l</option>
+      <option value="15. storočie, 2. polovica n.l">15. storočie, 2. polovica n.l</option>
+      <option value="16. storočie, 1. polovica n.l">16. storočie, 1. polovica n.l</option>
+      <option value="16. storočie, 2. polovica n.l">16. storočie, 2. polovica n.l</option>
+      <option value="17. storočie, 1. polovica n.l">17. storočie, 1. polovica n.l</option>
+      <option value="17. storočie, 2. polovica n.l">17. storočie, 2. polovica n.l</option>
+      <option value="18. storočie, 1. polovica n.l">18. storočie, 1. polovica n.l</option>
+      <option value="18. storočie, 2. polovica n.l">18. storočie, 2. polovica n.l</option>
+      <option value="19. storočie, 1. polovica n.l">19. storočie, 1. polovica n.l</option>
+      <option value="19. storočie, 2. polovica n.l">19. storočie, 2. polovica n.l</option>
+      <option value="20. storočie, 1. polovica n.l">20. storočie, 1. polovica n.l</option>
+      <option value="20. storočie, 2. polovica n.l">20. storočie, 2. polovica n.l</option>
+    </select>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="identifier">Identifikátor</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="identifier" name="identifier" placeholder="Spravuje" ng-model="objectcreate.objectData.identifier"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="auhors_rights">Autorské práva</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="auhors_rights" name="auhors_rights" placeholder="meno Autora" ng-model="objectcreate.objectData.auhors_rights"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="property_rights">Vlastnícke práva</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="property_rights" name="property_rights" placeholder="Prispievateľ" ng-model="objectcreate.objectData.property_rights"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<!--<div class="form-group">
+  <label class="col-md-4 control-label" for="relation">Podobné objekty</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="relation" name="relation" placeholder="podobné objekty" ng-model="objectcreate.objectData.relation"></textarea>
+  </div>
+</div>-->
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="classification">Klasifikácia</label>
+  <div class="col-md-4">
+    <select id="classification" name="classification" class="form-control" ng-model="objectcreate.objectData.classification">
+      <option value="Maliarske umenie">Maliarske umenie</option>
+      <option value="Sochárske umenie">Sochárske umenie</option>
+      <option value="Fotografické umenie">Fotografické umenie</option>
+      <option value="Grafické umenie">Grafické umenie</option>
+      <option value="Úžitkové umenie">Úžitkové umenie</option>
+      <option value="Architektonické umenie">Architektonické umenie</option>
+      <option value="Intermédiá a digitálne médiá">Intermédiá a digitálne médiá</option>
+      <option value="Prírodné dedičstvo">Prírodné dedičstvo</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="work_type">Výtvarný druh</label>
+  <div class="col-md-4">
+    <select id="work_type" name="work_type" class="form-control" ng-model="objectcreate.objectData.work_type">
+      <option value="Fotografia">Fotografia</option>
+      <option value="Maľba">Maľba</option>
+      <option value="Kresba">Kresba</option>
+      <option value="Socha">Socha</option>
+      <option value="Socha">Skulptúra</option>
+      <option value="Grafika">Grafika</option>
+      <option value="Užitové umenie">Užitový predmet</option>
+      <option value="Textil">Textil</option>
+      <option value="Architektúra">Architektúra</option>
+      <option value="Iné média">Iné média</option>
+      <option value="Plastika">Plastika</option>
+      <option value="Reprodukcia">Reprodukcia</option>
+      <option value="Tlačovina">Tlačovina</option>
+      <option value="Grafika">Grafika</option>      
+      <option value="Textil">Textil</option>      
+    </select>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="measurements">Rozmery</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="measurements" name="measurements" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.measurements"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="materials">Materiál</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="materials" name="materials" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.materials"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="techniques">Techniky</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="techniques" name="techniques" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.techniques"></textarea>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="placement">Umiestnenie</label>
+  <div class="col-md-4">
+    <select id="placement" name="placement" class="form-control" placeholder="Názov inštitúcie"  ng-model="objectcreate.objectData.placement">
+      <option value="Východoslovenské múzeum">Východoslovenské múzeum</option>
+            <option value="Východoslovenská galéria">Východoslovenská galéria</option>
+            <option value="Slovenské technické múzeum">Slovenské technické múzeum</option>
+            <option value="Múzeum Vojtecha Lőfflera">Múzeum Vojtecha Lőfflera</option>
+            <option value="Galéria Júliusa Jakobyho">Galéria Júliusa Jakobyho</option>
+            <option value="Múzeum letectva Košice">Múzeum letectva Košice</option>
+            <option value="Ondrej Kovaľ - Galéria Antika">Ondrej Kovaľ - Galéria Antika</option>
+      <option value="Mihal Gallery">Mihal Gallery</option>
+    </select>
+  </div>
+</div>
+
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="art_movement">Umelecký smer</label>
+  <div class="col-md-4">
+    <select id="art_movement" name="art_movement" class="form-control scrollable-menu" ng-model="objectcreate.objectData.art_movement">
+      <option value="Praveké umenie">Praveké umenie</option>
+      <option value="Umenie Egypta">Umenie Egypta</option>
+            <option value="Mezopotámia">Mezopotámia</option>
+      <option value="Krétske umenie (Minojská kultúra)">Krétske umenie (Minojská kultúra)</option>
+            <option value="Mykénske umenie">Mykénske umenie</option>
+      <option value="Umenie Gréckaa">Umenie Grécka</option>      
+    </select>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="media_object">Media object</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="media_object" name="media_object" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.media_object"></textarea>
+  </div>
+</div>
+
+<br>
+<div class="center">
+    <button class="btn btn-primary" type="submit">Pridať objekt</button>
+</div>
+</fieldset>
+</form>
+
+<br>
+
+<div class="row show-hide-message" ng-show="objectcreate.successMsg">
+    <div class="alert alert-success">{{ objectcreate.successMsg }}</div>
+</div>
+
+<br>
+
+<div class="row show-hide-message" ng-show="objectcreate.errorMsg">
+  <div class="alert alert-danger">{{ objectcreate.errorMsg }}</div>
+</div>

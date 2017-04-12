@@ -1,0 +1,8 @@
+<div class="container">
+	<h1>Pinterest like grid with bootstrap</h1>
+	<div class="row" ng-repeat="object in filteredObjects | filter: searchFilterObject | filter: query | filter: searchObject">
+		<div class="item well">
+            <img src="{{ object.media_object }}">
+        </div>		
+	</div>
+</div>

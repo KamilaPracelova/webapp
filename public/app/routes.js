@@ -1,168 +1,275 @@
 var app = angular.module('appRoutes', ['ngRoute'])
 
-// Configure Routes; 'authenticated = true' means the user must be logged in to access the route
-.config(function($routeProvider, $locationProvider) {
+    // Configure Routes; 'authenticated = true' means the user must be logged in to access the route
+    .config(function ($routeProvider, $locationProvider) {
 
-    // AngularJS Route Handler
-    $routeProvider
+        // AngularJS Route Handler
+        $routeProvider
 
-    // Route: Home             
-        .when('/', {
-        templateUrl: 'app/views/pages/home.html'
-    })
+            // Route: Home             
+            .when('/addroom', {
+                templateUrl: 'app/views/pages/stories/addroom.html',
+                controller: 'addRoomCtrl',
+                controllerAs: 'roomadd',
+            })
 
-    // Route: About Us (for testing purposes)
-    .when('/about', {
-        templateUrl: 'app/views/pages/about.html'
-    })
+            // Route: Home             
+            .when('/', {
+                templateUrl: 'app/views/pages/home.html'
+            })
 
-        // Route: About Us (for testing purposes)
-    .when('/story/:id', {
-       templateUrl: 'app/views/pages/story.html',
-       controller: 'showStoryCtrl',
-       controllerAs: 'storyshow'
-    })   
+           .when('/timeline', {
+                templateUrl: 'app/views/pages/timeline.html',
+                controller: 'timeline',
+            })
 
-        .when('/editstory/:id', {
-        templateUrl: 'app/views/pages/editstory.html',
-        controller: 'editStoryCtrl',
-        controllerAs: 'storyedit',
-        //authenticated: true,
-        //permission: ['admin', 'moderator']
-    })   
 
-    // Route: About Us (for testing purposes)
-    .when('/story2', {
-        templateUrl: 'app/views/pages/story2.html',
-        controller: 'storyCtrl',
-        controllerAs: 'storyall'
-    })
+           .when('/x', {
+                templateUrl: 'app/views/pages/x.html',
+                controller: 'SearchCtrl',
+            })
 
-        .when('/allstories', {
-        templateUrl: 'app/views/pages/allstories.html',
-        controller: 'storyCtrl',
-        controllerAs: 'storyall'
-    })
-    
-        .when('/createstory', {
-        templateUrl: 'app/views/pages/createstory.html',
-        controller: 'savestoryCtrl',
-        controllerAs: 'creating'
-    })
 
-    // Route: User Registration
-    .when('/register', {
-        templateUrl: 'app/views/pages/users/register.html',
-        controller: 'regCtrl',
-        controllerAs: 'register',
-        authenticated: false
-    })
+            // Route: Get all cultural objects
+            .when('/searchobjects', {
+                templateUrl: 'app/views/pages/objects/searchobjects.html',
+                controller: 'allObjectCtrl',
+                controllerAs: 'objectall'
+            })
 
-    // Route: User Login
-    .when('/login', {
-        templateUrl: 'app/views/pages/users/login.html',
-        authenticated: false
-    })
 
-    // Route: User Profile
-    .when('/profile', {
-        templateUrl: 'app/views/pages/users/profile.html',
-        authenticated: true
-    })
+            // Route: About Us (for testing purposes)
+            .when('/about', {
+                templateUrl: 'app/views/pages/about.html'
+            })
 
-    // Route: Facebook Callback Result            
-    .when('/facebook/:token', {
-        templateUrl: 'app/views/pages/users/social/social.html',
-        controller: 'facebookCtrl',
-        controllerAs: 'facebook',
-        authenticated: false
-    })
+            // Route: Create a cultural object
+            .when('/createobject', {
+                templateUrl: 'app/views/pages/objects/createobject.html',
+                controller: 'createObjectCtrl',
+                controllerAs: 'objectcreate',
+                authenticated: true,
+                permission: ['admin', 'moderator']
+            })
 
-    // Route: Twitter Callback Result
-    .when('/twitter/:token', {
-        templateUrl: 'app/views/pages/users/social/social.html',
-        controller: 'twitterCtrl',
-        controllerAs: 'twitter',
-        authenticated: false
-    })
+            // Route: Get all cultural objects
+            .when('/allobjects', {
+                templateUrl: 'app/views/pages/objects/allobjects.html',
+                controller: 'allObjectCtrl',
+                controllerAs: 'objectall'
+            })
 
-    // Route: Google Callback Result
-    .when('/google/:token', {
-        templateUrl: 'app/views/pages/users/social/social.html',
-        controller: 'twitterCtrl',
-        controllerAs: 'twitter',
-        authenticated: false
-    })
+            // Route: Get all cultural objects
+            .when('/likedobjects', {
+                templateUrl: 'app/views/pages/objects/likedobjects.html',
+                controller: 'allObjectCtrl',
+                controllerAs: 'objectall'
+            })
 
-    // Route: Facebook Error
-    .when('/facebookerror', {
-        templateUrl: 'app/views/pages/users/login.html',
-        controller: 'facebookCtrl',
-        controllerAs: 'facebook',
-        authenticated: false
-    })
+            // Route: Get all cultural objects
+            .when('/allobjectsbycreators', {
+                templateUrl: 'app/views/pages/objects/allobjectsbycreators.html',
+                controller: 'allObjectsByCreatorsCtrl',
+                controllerAs: 'objecbycreatorall'
+            })
 
-    // Route: Twitter Error
-    .when('/twittererror', {
-        templateUrl: 'app/views/pages/users/login.html',
-        controller: 'twitterCtrl',
-        controllerAs: 'twitter',
-        authenticated: false
-    })
+                        // Route: Get all cultural objects
+            .when('/allobjectsbycreator', {
+                templateUrl: 'app/views/pages/objects/allobjectsbycreator.html',
+                controller: 'allObjectsByCreatorCtrl',
+                controllerAs: 'objectbycreator'
+            })
 
-    // Route: Google Error
-    .when('/googleerror', {
-        templateUrl: 'app/views/pages/users/login.html',
-        controller: 'googleCtrl',
-        controllerAs: 'google',
-        authenticated: false
-    })
+                                    // Route: Get all cultural objects
+            .when('/w', {
+                templateUrl: 'app/views/pages/objects/w.html',
+                controller: 'allObjectCtrl',
+            })
 
-    // Route: Twitter Not Yet Activated Error
-    .when('/twitter/unconfirmed/error', {
-        templateUrl: 'app/views/pages/users/login.html',
-        controller: 'twitterCtrl',
-        controllerAs: 'twitter',
-        authenticated: false
-    })
+            // Route: Get one cultural object
+            .when('/object/:id', {
+                templateUrl: 'app/views/pages/objects/object.html',
+                controller: 'showObjectsByCreatorCtrl',
+                controllerAs: 'objectshow'
+            })
 
-    // Route: Manage User Accounts
-    .when('/management', {
-        templateUrl: 'app/views/pages/management/management.html',
-        controller: 'managementCtrl',
-        controllerAs: 'management',
-        authenticated: true,
-        permission: ['admin', 'moderator']
-    })
+            // Route: Get all object creators
+            .when('/allcreators', {
+                templateUrl: 'app/views/pages/objects/allcreators.html',
+                controller: 'allCreatorCtrl',
+                controllerAs: 'creatorall'
+            })
 
-    // Route: Edit a User
-    .when('/edit/:id', {
-        templateUrl: 'app/views/pages/management/edit.html',
-        controller: 'editCtrl',
-        controllerAs: 'edit',
-        authenticated: true,
-        permission: ['admin', 'moderator']
-    })
+            .when('/createstory', {
+                templateUrl: 'app/views/pages/stories/createstory.html',
+                controller: 'createStoryCtrl',
+                controllerAs: 'storycreate',
+                authenticated: true,
+                permission: ['admin', 'moderator', 'user']
+            })
 
-    // Route: Search Database Users
-    .when('/search', {
-        templateUrl: 'app/views/pages/management/search.html',
-        controller: 'managementCtrl',
-        controllerAs: 'management',
-        authenticated: true,
-        permission: ['admin', 'moderator']
-    })
+             .when('/createdog', {
+                templateUrl: 'app/views/pages/stories/createdog.html',
+                controller: 'createDogCtrl',
+                controllerAs: 'dogcreate',
+                authenticated: true,
+                permission: ['admin', 'moderator', 'user']
+            })
 
-    .otherwise({ redirectTo: '/' }); // If user tries to access any other route, redirect to home page
 
-    $locationProvider.html5Mode({ enabled: true, requireBase: false }); // Required to remove AngularJS hash # from URL (no base is required in index file)
-});
+              .when('/createfriend', {
+                templateUrl: 'app/views/pages/stories/createfriend.html',
+                controller: 'createFriendCtrl',
+                controllerAs: 'friendcreate',
+                authenticated: true,
+                permission: ['admin', 'moderator', 'user']
+            })
+
+            .when('/allstories', {
+                templateUrl: 'app/views/pages/stories/allstories.html',
+                controller: 'allStoryCtrl',
+                controllerAs: 'storyall'
+            })
+
+            // Route: About Us (for testing purposes)
+            .when('/story/:id', {
+                templateUrl: 'app/views/pages/stories/story.html',
+                controller: 'showStoryCtrl',
+                controllerAs: 'storyshow'
+            })
+
+            .when('/editstory/:id', {
+                templateUrl: 'app/views/pages/stories/editstory.html',
+                controller: 'editStoryCtrl',
+                controllerAs: 'storyedit',
+                //authenticated: true,
+                //permission: ['admin', 'moderator']
+            })
+
+            // Route: User Registration
+            .when('/register', {
+                templateUrl: 'app/views/pages/users/register.html',
+                controller: 'regCtrl',
+                controllerAs: 'register',
+                authenticated: false
+            })
+
+            // Route: User Login
+            .when('/login', {
+                templateUrl: 'app/views/pages/users/login.html',
+                authenticated: false
+            })
+
+            // Route: User Profile
+            .when('/profile', {
+                templateUrl: 'app/views/pages/users/profile.html',
+                authenticated: true
+            })
+
+            // Route: Facebook Callback Result            
+            .when('/facebook/:token', {
+                templateUrl: 'app/views/pages/users/social/social.html',
+                controller: 'facebookCtrl',
+                controllerAs: 'facebook',
+                authenticated: false
+            })
+
+            // Route: Twitter Callback Result
+            .when('/twitter/:token', {
+                templateUrl: 'app/views/pages/users/social/social.html',
+                controller: 'twitterCtrl',
+                controllerAs: 'twitter',
+                authenticated: false
+            })
+
+            // Route: Google Callback Result
+            .when('/google/:token', {
+                templateUrl: 'app/views/pages/users/social/social.html',
+                controller: 'twitterCtrl',
+                controllerAs: 'twitter',
+                authenticated: false
+            })
+
+            // Route: Facebook Error
+            .when('/facebookerror', {
+                templateUrl: 'app/views/pages/users/login.html',
+                controller: 'facebookCtrl',
+                controllerAs: 'facebook',
+                authenticated: false
+            })
+
+            // Route: Twitter Error
+            .when('/twittererror', {
+                templateUrl: 'app/views/pages/users/login.html',
+                controller: 'twitterCtrl',
+                controllerAs: 'twitter',
+                authenticated: false
+            })
+
+            // Route: Google Error
+            .when('/googleerror', {
+                templateUrl: 'app/views/pages/users/login.html',
+                controller: 'googleCtrl',
+                controllerAs: 'google',
+                authenticated: false
+            })
+
+            // Route: Twitter Not Yet Activated Error
+            .when('/twitter/unconfirmed/error', {
+                templateUrl: 'app/views/pages/users/login.html',
+                controller: 'twitterCtrl',
+                controllerAs: 'twitter',
+                authenticated: false
+            })
+
+            // Route: Manage User Accounts
+            .when('/management', {
+                templateUrl: 'app/views/pages/management/management.html',
+                controller: 'managementCtrl',
+                controllerAs: 'management',
+                authenticated: true,
+                permission: ['admin']
+            })
+
+
+                        // Route: Manage User Accounts
+            .when('/cat', {
+                templateUrl: 'app/views/pages/management/cat.html',
+                controller: 'catCtrl',
+                controllerAs: 'cat',
+                authenticated: true,
+                permission: ['admin']
+            })
+
+
+            // Route: Edit a User
+            .when('/edit/:id', {
+                templateUrl: 'app/views/pages/management/edit.html',
+                controller: 'editCtrl',
+                controllerAs: 'edit',
+                authenticated: true,
+                permission: ['admin', 'moderator']
+            })
+
+            // Route: Search Database Users
+            .when('/search', {
+                templateUrl: 'app/views/pages/management/search.html',
+                controller: 'managementCtrl',
+                controllerAs: 'management',
+                authenticated: true,
+                permission: ['admin', 'moderator']
+            })
+
+            .otherwise({ redirectTo: '/' }); // If user tries to access any other route, redirect to home page
+
+        $locationProvider.html5Mode({ enabled: true, requireBase: false }); // Required to remove AngularJS hash # from URL (no base is required in index file)
+    });
 
 // Run a check on each route to see if user is logged in or not (depending on if it is specified in the individual route)
-app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $location, User) {
+app.run(['$rootScope', 'Auth', '$location', 'User', function ($rootScope, Auth, $location, User) {
 
     // Check each time route changes    
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
         // Only perform if user visited a route listed above
         if (next.$$route !== undefined) {
@@ -174,7 +281,7 @@ app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $
                     $location.path('/'); // Redirect to home instead
                 } else if (next.$$route.permission) {
                     // Function: Get current user's permission to see if authorized on route
-                    User.getPermission().then(function(data) {
+                    User.getPermission().then(function (data) {
                         // Check if user's permission matches at least one in the array
                         if (next.$$route.permission[0] !== data.data.permission) {
                             if (next.$$route.permission[1] !== data.data.permission) {

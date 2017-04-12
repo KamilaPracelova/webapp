@@ -1,27 +1,33 @@
 angular.module('storyServices', [])
 
-.factory('Story', function($http) {
-    var storyFactory = {}; // Create the userFactory object
+    .factory('Story', function ($http) {
+        var storyFactory = {}; // Create the storyFactory object
 
         // Register story in database
-    storyFactory.create = function(storyData) {
-        return $http.post('/api/createstory', storyData);
-    };
-    
-            // Get all the users from database
-    storyFactory.getStories = function() {
-        return $http.get('/api/allstories/');
-    };
+        storyFactory.createStory = function (storyData) {
+            return $http.post('/api/createstory', storyData);
+        };
 
-        // Edit a user
-    storyFactory.editStory = function(id) {
-        return $http.get('/api/editstory/', + id);
-    };
+                // Register story in database
+        storyFactory.createDog = function (dogData) {
+            return $http.post('/api/createdog', dogData);
+        };
 
-        // Edit a user
-    storyFactory.getStory = function(id) {
-       return $http.get('/api/story/', + id);
-   };
 
-    return storyFactory; // Return userFactory object
-});
+        // Get all the stories from database
+        storyFactory.getAllStories = function () {
+            return $http.get('/api/allstories/');
+        };
+
+        // Edit a story
+        storyFactory.getStory = function (id) {
+            return $http.get('/api/story/' + id);
+        };
+
+        //     // Edit a story
+        // storyFactory.editStory = function(id) {
+        //     return $http.get('/api/editstory/' + id);
+        // };
+
+        return storyFactory; // Return storyFactory object
+    });

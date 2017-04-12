@@ -2,12 +2,15 @@
 <html lang="en">
 
 <head>
-    <base href="/"> <!-- use application without # -->
+    <base href="/">
+    <!-- use application without # -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM"></script>
 
     <!-- Main Angular Files -->
     <script src="assets/js/angular.js"></script>
@@ -22,7 +25,11 @@
     <script src="app/controllers/userCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
     <script src="app/controllers/managementCtrl.js"></script>
-    <script src="app/controllers/storyCtrl.js"></script>
+    <script src="app/controllers/storyCtrl.js"></script>                                              
+    <script src="app/controllers/objectCtrl.js"></script>
+    <script src="app/controllers/addCtrl.js"></script>
+    <script src="app/controllers/timeline.js"></script>
+
 
     <!-- Angular Directives
     <script type="text/javascript" src="app/directives/fileModel.js"></script>
@@ -32,278 +39,385 @@
     <script src="app/services/userServices.js"></script>
     <script src="app/services/authServices.js"></script>
     <script src="app/services/storyServices.js"></script>
+    <script src="app/services/objectServices.js"></script>
 
-    <!--<script src="app/services/uploadFileServices.js"></script> -->
-
-
-    <!-- Cascade Style Sheets -->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="bootstrap.min.css" rel="stylesheet" />
+    <!--<script src="http://maps.google.com/maps/api/js"></script>
+    <script src="script-tags-for-development.js"></script>-->
 
     <title>WEBAPPLICATION</title>
 
+    <link rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM&callback=initMap"async defer></script>-->
+
+    <!--<script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>-->
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- Squad theme CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="color/default.css" rel="stylesheet">
 </head>
 
-  <!-- ng-app="userApp" use angular application -->
-    <!-- ng-controller here because we want it in every view -->
-        <!-- ng-show="main.loadme" ng-cloak -> do not show loading nav bar-->
-<body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom" ng-app="userApp" ng-controller="mainCtrl as main">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="load"></div>
+    </div>
+
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+
+                <!-- Search -->
+                <div class="container-2">
+                    <span class="icon"><a href="/allobjects"><i class="fa fa-search"></a></i></span>
+                    <input type="search" id="search" placeholder="Hľadať" / ng-model="searchObject">
+                    <!--<input type="submit" style="display:none"/>-->
+                    <!--<a href="/allobjects">
+                <button type="button" class="btn btn-default">adsa</button>-->
+                </div>
+
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="/">DIPLOMOVKA</a>
+                <a class="navbar-brand" href="#intro">
+                    <h1>Aplikácia</h1>
+                </a>-->
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden active">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="">
-                        <a class="page-scroll" href="/">Home</a>
-                    </li>
-                    <li class="">
-                        <a ng-show="!main.isLoggedIn" class="page-scroll" href="/login">Login</a>
-                    </li>
-                    <li class="">
-                        <a ng-show="!main.isLoggedIn" class="page-scroll" href="/register">Register</a>
-                    </li>
-                    <li class="">
-                        <a ng-show="main.isLoggedIn" class="page-scroll" href="#" ng-click="main.logout();">Logout</a>
-                    </li>
-                    <li class="">
-                        <a ng-show="main.isLoggedIn && main.authorized" class="page-scroll" href="/management">Management</a>
-                    </li>
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Domov</a></li>
+                    <!--<li><a href="#service">About</a></li>-->
+                    <li><a href="/allobjects">Umelecké objekty</a></li>
+                    <li><a href="/allcreators">Autori</a></li>
+                    <li><a ng-show="!main.isLoggedIn" href="/login">Prihlásiť sa</a></li>
+                    <li><a ng-show="!main.isLoggedIn" href="/register">Registrovať sa</a></li>
+                    <!--<li><a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Logout</a></li>-->
+                    <li><a ng-show="main.isLoggedIn && main.authorized" href="/management">Management</a></li>
                     <li class="dropdown">
-                          <a ng-show="main.isLoggedIn" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ main.username }} <span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="/profile">Profile</a></li>
-                            <li><a href="/gallery">Gallery</a></li>
-                            <li><a href="/images">Images</a></li>
-                            <!--<li><a href="/upload">Upload</a></li> -->
-                            <li><a href="/test">All</a></li>
+                        <a ng-show="main.isLoggedIn" href="#" class="dropdown-toggle" data-toggle="dropdown">{{ main.username }}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="#">Obľúbené</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createstory">Vytvoriť story</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/allstories">Moje story</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createobject">Vytvoriť objekt</a></li>
                             <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="/story">Story</a></li>
-                            <li><a href="/createstory">Create Story</a></li>
-                            <li><a ng-show="main.isLoggedIn" href="/allstories">All stories</a></li>
-                          </ul>
-                        </li>
-                    <li class="">
-                        <a ng-show="main.isLoggedIn" class="page-scroll" href="/profile">Hello {{ main.username }}</a>
+                            <li class="dropdown-header">Profil</li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/profile">Profil</a></li>
+                            <li><a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Odhlásiť sa</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
-
             <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.container -->
     </nav>
 
-    <!-- Header -->
-    <header ng-show="main.home">
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="" data-slide-to="0" class="active"></li>
-    <li data-target="" data-slide-to="1"></li>
-    <li data-target="" data-slide-to="2"></li>
-    <li data-target="" data-slide-to="3"></li>
-  </ol>
+    <!-- Section: intro -->
+    <section id="intro" class="intro" ng-show="main.home">
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-        <div class="slide-1"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>DIPLOMOVKA</h1>        
-            <h3>Objavujte umenie novým spôsobom.</h3>
-                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
-                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
-                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
-                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
-      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
-    </div>
+        <div class="slogan">
+            <div class="wow fadeInUp" data-wow-delay="0.2s">
 
-    <div class="item">
-         <div class="slide-2"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>DIPLOMOVKA</h1>        
-            <h3>Vytvárajte vlastné stories.</h3>
-                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
-                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
-                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
-                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
-      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
-    </div>
+                <h2>Vitajte na stránke </h2>
+                <h4>pre prezentovanie kultúrneho dedičstva</h4>
+            </div>
 
-    <div class="item">
-         <div class="slide-3"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>DIPLOMOVKA</h1>        
-            <h3>Zdieľajte Vaše obľúbené diela s vašími priateľmi</h3>
-                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
-                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
-                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
-                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
-      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
-    </div>
+            <!--<div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <input id="pac-input" class="controls" type="text" placeholder="Hľadať umelecký objekt" ng-model="searchObject">
+                    </div>
+                </div>
+            </div>-->
 
-    <div class="item">
-         <div class="slide-4"></div>
-      <div class="hero">
-        <hgroup>
-            <h1>DIPLOMOVKA</h1>        
-            <h3>Get start your next awesome project</h3>
-                <a ng-show="!main.isLoggedIn" href="/login" class="page-scroll btn btn-xl">Sign In</a>
-                <a ng-show="!main.isLoggedIn" href="/register" class="page-scroll btn twitterbtn">Register</a>
-                <a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();" class="page-scroll btn btn-xl">Logout</a>
-                <a ng-show="main.isLoggedIn && main.authorized" href="/management" class="page-scroll btn facebookbtn">View</a>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">See all features</button>
-      </div>
-      <img src="./assets/images/main9.jpeg" class="img-responsive" style="width:100%; height:100vh">
-    </div>
-  </div>
-</div>
-</div>
-    </header>
 
-    <section id="services"> 
+            <!--<div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <form action="" method="get">
+                            <input id="pac-input" class="controls" type="text" placeholder="Hľadať umelecký objekt" ng-model="searchObject">
+                            <input type="submit" style="display:none"/>
+                        </form>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+        <div class="page-scroll">
+            <div class="wow fadeInUp" data-wow-delay="0.2s">
+
+                <a href="#service" class="btn btn-circle">
+                    <i class="fa fa-angle-double-down animated"></i>
+                </a>
+            </div>
+        </div>
+
+    </section>
+    <!-- /Section: intro -->
+
+    <!-- Section: services -->
+    <section id="service" class="home-section text-center bg-gray" ng-show="main.home">
+
+        <div class="heading-about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="section-heading">
+                                <h2>Prezerajte si kultúrne objekty...</h2>
+                                <ng-map center="[40.74, -74.18]"></ng-map>
+
+
+                                <i class="fa fa-2x fa-angle-down"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
+                <div class="col-lg-2 col-lg-offset-5">
+                    <hr class="marginbot-50">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-1.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Print</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-2.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Web Design</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-3.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Photography</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="wow fadeInRight" data-wow-delay="0.2s">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <img src="img/icons/service-icon-4.png" alt="" />
+                            </div>
+                            <div class="service-desc">
+                                <h5>Cloud System</h5>
+                                <p>Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Section: services -->
 
-                <!-- Angular View -->
+    <!-- Section: contact -->
+    <section id="contact" class="home-section text-center" ng-show="main.home">
+        <div class="heading-contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="section-heading">
+                                <h2>...a vytvárajte si svoje vlastné stories</h2>
+                                <i class="fa fa-2x fa-angle-down"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-5">
+                    <hr class="marginbot-50">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="boxed-grey">
+
+                        <div id="sendmessage">Your message has been sent. Thank you!</div>
+                        <div id="errormessage"></div>
+                        <form id="contact-form" action="" method="post" role="form" class="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">
+                                Name</label>
+                                        <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
+                                        />
+                                        <div class="validation"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">
+                                Email Address</label>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"
+                                            />
+                                            <div class="validation"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subject">
+                                Subject</label>
+                                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"
+                                        />
+                                        <div class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">
+                                Message</label>
+                                        <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                        <div class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-skin pull-right" id="btnContactUs">
+                            Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="widget-contact">
+                        <h5>Main Office</h5>
+
+                        <address>
+                            <strong>Squas Design, Inc.</strong><br> Tower 795 Folsom Ave, Beautiful Suite 600<br> San Francisco,
+                            CA 94107<br>
+                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                        </address>
+
+                        <address>
+                            <strong>Email</strong><br>
+                            <a href="mailto:#">email.name@example.com</a>
+                        </address>
+                        <address>
+                            <strong>We're on social networks</strong><br>
+                            <ul class="company-social">
+                                <li class="social-facebook"><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li class="social-twitter"><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li class="social-dribble"><a href="#" target="_blank"><i class="fa fa-dribbble"></i></a></li>
+                                <li class="social-google"><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </address>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Section: contact -->
+
+    <!--<section id="services" lass="home-section text-center">-->
+    <div class="container">
+        <div class="row">
+            <!--<div class="wow bounceInDown" data-wow-delay="0.4s">-->
+            <div class="section-heading">
                 <div ng-view></div>
-                <!-- Angular View -->
-
+                <!--</div>-->
             </div>
         </div>
-    </section>
+        <!--</div>
+    </section>-->
 
-    <!-- Portfolio Grid Section -->
-    <section ng-show="main.home" id="portfolio" class="bg-light-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="page-scroll marginbot-30">
+                                <a href="#intro" id="totop" class="btn btn-circle">
+                                    <i class="fa fa-angle-double-up animated"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<p>&copy;SquadFREE. All rights reserved.</p>-->
+                    <div class="wow fadeInUp" data-wow-delay="0.2s">
 
-                    <h2 class="section-heading">About This Page</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                        <div class="credits">
+                            <div class="footerrr">
+                                <div class="containerrr">
+                                    <a href='#'><i class="fa fa-google-plus fa-3x fa-fw"></i></a>
+                                    <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+                                    <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+                                    <a href='#'><i class="fa fa-pinterest fa-3x fa-fw"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="glyphicon glyphicon-film"></span>
-                    <h4 class="service-heading">YouTube</h4>
-                    <p class="text-muted">Ensure you check out the YouTube video series associated with this web page. Visit:
-                        <a href="https://www.youtube.com/playlist?list=PL3vQyqzqjZ637sWpKvniMCxdqZhnMJC1d" target="_blank">https://www.youtube.com/playlist?list=PL3vQyqzqjZ637sWpKvniMCxdqZhnMJC1d</a>
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <span class="glyphicon glyphicon-usd"></span>
-                    <h4 class="service-heading">Facebook</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="glyphicon glyphicon-save"></span>
-                    <h4 class="service-heading">Github</h4>
-                    <p class="text-muted">Ensure you check out the GitHub page associated with this web page. Visit:
-                        <a href="https://github.com/gugui3z24" target="_blank">https://github.com/gugui3z24</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer ng-show="main.home">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <span class="copyright">Copyright © David Acosta</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline quicklinks">
-                        <li><a href="http://www.facebook.com"><img src="http://www.ln.edu.hk/mkt/mscmib/Facebook-Icon.png" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
-                        </li>
-                        <li><a href="http://www.twitter.com"><img src="https://visibility.sk/blog/wp-content/uploads/twitter.png" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
-                        </li>
-                        <li><a href="http://www.instagram.com"><img src="http://www.techcracky.com/wp-content/uploads/2016/05/Logo-Baru-Instagram.jpg" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
-                        </li>
-                        <li><a href="http://www.instagram.com"><img src="http://www.wildsocialmedia.com/wp-content/uploads/2015/07/google-plus.png" alt="HTML tutorial" style="width:42px;height:42px;border:0"></a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
+    </div>
     </footer>
 
-    <!-- BootstrapJS Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
+    <!-- Core JavaScript Files -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.scrollTo.js"></script>
+    <script src="js/wow.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/custom.js"></script>
+    <!--<script src="contactform/contactform.js"></script>-->
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM&callback=initMap"async defer></script>-->
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button ng-hide="main.hideButton" type="button" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>
-                    <!-- Modal Header -->
-                    <h4 class="modal-title">{{ main.modalHeader }}</h4>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <p>{{ main.modalBody }}</p>
-                    <div ng-show="main.hideButton" class="dizzy-gillespie"></div>
-                </div>
-                <div class="modal-footer">
-                    <!-- Modal 'Yes' & 'No' Buttons -->
-                    <button type="button" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                    <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
-                </div>
-            </div>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM"></script>-->
 
-        </div>
-    </div>
-    <!-- BootstrapJS Modal -->
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery-3.1.1.min.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
 </body>
 
 </html>

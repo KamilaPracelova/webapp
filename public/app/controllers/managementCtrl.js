@@ -125,6 +125,8 @@ angular.module('managementController', [])
     };
 })
 
+
+    
 // Controller: Used to edit users
 .controller('editCtrl', function($scope, $routeParams, User, $timeout) {
     var app = this;
@@ -312,6 +314,7 @@ angular.module('managementController', [])
             app.disabled = false; // Enable form for editing
         }
     };
+
 
     // Function: Update the user's permission
     app.updatePermissions = function(newPermission) {

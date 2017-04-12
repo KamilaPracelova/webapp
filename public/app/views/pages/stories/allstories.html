@@ -1,0 +1,40 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Vaša zbierka stories
+        </h1>
+    </div>
+</div>
+<br>
+<div class="container">
+	<div class="row">
+       <div class="row">
+
+		<article ng-repeat="story in storyall.stories" class="col-md-6">
+    			<figure class="col-lg-12">
+				<a href=""><img class="img img-responsive article-img" src="{{story.story_title_image}}"></a>
+				<figcaption class="article-caption"><h1 class="article-title"><a href="/story/{{ story._id }}">{{ story.story_title }}</a></h1>
+				</figcaption>
+				</figure>
+				<div class="article-intro col-lg-12" style="padding-top: 10px;">
+				<!--<strong>{{ story.subtitle }}</strong>-->
+								</div>
+				
+				</article>
+                
+				
+                </div>
+	</div>
+</div>
+<br>
+
+<!-- Custom Error Message -->
+<div class="row show-hide-message" ng-show="storyall.showMoreError">
+    <div class="alert alert-danger">{{ storyall.showMoreError }}</div>
+</div>
+<!-- Custom Error Message -->
+</body>
