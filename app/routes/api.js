@@ -15,7 +15,7 @@ module.exports = function (router) {
         user.email = req.body.email; // Save email from request to User object
         user.name = req.body.name; // Save name from request to User object
         // Check if request is valid and not empty or null
-        if (req.body.username === null || req.body.username === '' || req.body.password === null || req.body.password === '' || req.body.email === null || req.body.email === '' || req.body.name === null || req.body.name === '') {
+         if (req.body.username === null || req.body.username === '' || req.body.password === null || req.body.password === '' || req.body.email === null || req.body.email === '' || req.body.name === null || req.body.name === '') {
             res.json({ success: false, message: 'Ensure username, email, and password were provided' });
         } else {
             // Save new user to database
@@ -502,18 +502,6 @@ module.exports = function (router) {
         });
     });
 
-    //Route to get all cultural objects
-    router.get('/allobjects/:creator', function (req, res) {
-        console.log(req.params.creator);
-        Object.findOne({ creator: req.params.creator }, function (err, object) {
-            if (err) throw err;
-            else {
-                res.json({ success: true, object: object });
-            }
-        });
-    });
-
-
     //Route to get all creators of cultural objects
     router.get('/allcreators', function (req, res) {
         Object.find({}, function (err, objects) {
@@ -534,16 +522,17 @@ module.exports = function (router) {
         });
     });
 
-    //Route to get all cultural objects ordered by creators
-    router.get('/allobjectsbycreator', function (req, res) {
-        Object.find({}, function (err, objects) {
-            if (err) throw err;
-            else {
-                res.json({ success: true, objects: objects });
-            }
-        });
-    });
+    // //Route to get all cultural objects ordered by creators
+    // router.get('/allobjectsbycreator', function (req, res) {
+    //     Object.find({}, function (err, objects) {
+    //         if (err) throw err;
+    //         else {
+    //             res.json({ success: true, objects: objects });
+    //         }
+    //     });
+    // });
 
+    
 
     //Route to get one cultural object
     router.get('/object/:id', function (req, res) {
@@ -570,10 +559,30 @@ module.exports = function (router) {
         story.story_subtitle = req.body.story_subtitle;
         story.story_description = req.body.story_description;
         story.story_title_image = req.body.story_title_image;
-        story.dogs.push({ name: 'Joe' });
+        story.dogs.push({ name: 'Joe'});
+        //story.user = user._id;
+        //User.findOne({ username: req.body.username }).select('username').exec(function(err, user) {
         res.json({ success: true, message: 'story created' });
+        //user.story.push({email: 'Daasds'});
         story.save();
     });
+
+          router.put('/addstory', function (req, res) {
+        // var storyToAdd = req.params.id;
+        var UserOfStory = req.body._id;
+
+        User.findOne({ _id: UserOfStory }, function (err, user) {
+            if(err) {
+                console.log(err); // Log any errors to the console
+            } else {
+             console.log(user);
+             user.push({pribeh: 'pribeh'});
+        //do something depending on the number of documents affected
+            user.save();
+    }
+      }
+      );
+      });
 
     //Route to get all stories
     router.get('/allstories', function (req, res) {

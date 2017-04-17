@@ -201,6 +201,25 @@ angular.module('objectController', ['objectServices'])
                 $scope.like.votes++;
             }
         }
+
+        // $scope.fcia = function () {
+        //     console.log('madona')
+
+        // }
+
+        //      Object.getObject($routeParams.id).then(function (data) {
+
+        //         if (data.data.success) {
+
+        //             console.log($routeParams.id);
+        //             console.log(data);
+        //   }
+        //         else {
+        //             console.log('errorMsg');
+        //         }
+        //      });
+
+
     })
 
     .filter('count', function () {
@@ -249,7 +268,7 @@ angular.module('objectController', ['objectServices'])
                 $scope.objectTitle = data.data.object.title;
                 $scope.objectCreator = data.data.object.creator;
                 $scope.objectSubject = data.data.object.subject;
-                $scope.objectDescription = data.data.object.description;
+                $scope.objecttitleription = data.data.object.titleription;
                 $scope.objectYear = data.data.object.year;
                 $scope.objectPeriod = data.data.object.period;
                 $scope.objectIdentifier = data.data.object.identifier;
@@ -276,8 +295,9 @@ angular.module('objectController', ['objectServices'])
 
                     var location = [
                         {
-                            city: $scope.objectPlacement,
-                            desc: $scope.objectTitle,
+                            place: $scope.objectPlacement,
+                            title: $scope.objectTitle,
+                            creator: $scope.objectCreator,
                             latitude: $scope.latitude,
                             longitude: $scope.longitude,
                         }];
@@ -299,12 +319,12 @@ angular.module('objectController', ['objectServices'])
                         var marker = new google.maps.Marker({
                             map: $scope.map,
                             position: new google.maps.LatLng(info.latitude, info.longitude),
-                            title: info.city
+                            title: info.place
                         });
-                        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+                        marker.content = '<div class="infoWindowContent">' + info.title + '<br>' + info.creator + '</div>';
 
                         google.maps.event.addListener(marker, 'click', function () {
-                            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+                            infoWindow.setContent('<p><b><center>' + marker.title + '</center></b></p>' + marker.content);
                             infoWindow.open($scope.map, marker);
                         });
 
@@ -313,7 +333,6 @@ angular.module('objectController', ['objectServices'])
                     }
 
                     createMarker(location[0]);
-
 
                     $scope.openInfoWindow = function (e, selectedMarker) {
                         e.preventDefault();
@@ -382,24 +401,24 @@ angular.module('objectController', ['objectServices'])
         getAllObjectsByCreators()
     })
 
-    // Show all object creators
-    .controller('allObjectsByCreatorCtrl', function (Object, $scope, $http, $location) {
+    // // Show all object creators
+    // .controller('allObjectsByCreatorCtrl', function (Object, $scope, $http, $location) {
 
-        var app = this;
+    //     var app = this;
 
-        function getAllObjectsByCreator() {
-            Object.getAllObjectsByCreator().then(function (data) {
-                if (data.data.success) {
-                    app.objects = data.data.objects;
-                    $scope.objects = app.objects;
-                }
+    //     function getAllObjectsByCreator() {
+    //         Object.getAllObjectsByCreator().then(function (data) {
+    //             if (data.data.success) {
+    //                 app.objects = data.data.objects;
+    //                 $scope.objects = app.objects;
+    //             }
 
-                $scope.filterCreator = object.creator;
+    //             $scope.filterCreator = 'Vojtech';  
 
-            });
-        }
-        getAllObjectsByCreator()
-    })
+    //         });
+    //     }
+    //     getAllObjectsByCreator()
+    // })
 
 
 
@@ -435,27 +454,4 @@ angular.module('objectController', ['objectServices'])
             });
         }
         getCreators()
-    })
-
-    // Show one cultural object
-    .controller('showObjectsByCreatorCtrl', function (Object, $scope, $routeParams, $http) {
-
-        function getAllObjects() {
-            Object.getAllObjects().then(function (data) {
-                if (data.data.success) {
-                    app.objects = data.data.objects;
-                    $scope.objects = app.objects
-                    console.log(data);
-                }
-            });
-        }
-        getAllObjects()
-
-        $scope.creator = function (creator) {
-            $scope.creator = creator;
-        }
-
-
-
-
     })

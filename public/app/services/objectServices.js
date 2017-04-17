@@ -43,10 +43,6 @@ angular.module('objectServices', [])
     objectFactory.getCreators = function() {
         return $http.get('/api/allcreators/');
     };
-
-    // objectFactory.googleMapService = function() {
-    //     return $http.get('/api/googlemapservice/');
-    // };
     
     return objectFactory; // Return userFactory object
 });
