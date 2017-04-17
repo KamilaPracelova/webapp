@@ -28,7 +28,6 @@
     <script src="app/controllers/storyCtrl.js"></script>                                              
     <script src="app/controllers/objectCtrl.js"></script>
     <script src="app/controllers/addCtrl.js"></script>
-    <script src="app/controllers/timeline.js"></script>
 
 
     <!-- Angular Directives
@@ -97,6 +96,8 @@
                     <!--<li><a href="#service">About</a></li>-->
                     <li><a href="/allobjects">Umelecké objekty</a></li>
                     <li><a href="/allcreators">Autori</a></li>
+                    <li><a href="/allstories">Príbehy</a></li>
+
                     <li><a ng-show="!main.isLoggedIn" href="/login">Prihlásiť sa</a></li>
                     <li><a ng-show="!main.isLoggedIn" href="/register">Registrovať sa</a></li>
                     <!--<li><a ng-show="main.isLoggedIn" href="#" ng-click="main.logout();">Logout</a></li>-->
@@ -106,9 +107,10 @@
                         <ul class="dropdown-menu">
 
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="#">Obľúbené</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createobject">Vytvoriť objekt</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/allobjects">Moje objekty</a></li>
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="/createstory">Vytvoriť story</a></li>
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="/allstories">Moje story</a></li>
-                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/createobject">Vytvoriť objekt</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Profil</li>
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="/profile">Profil</a></li>

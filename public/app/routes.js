@@ -18,12 +18,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/home.html'
             })
 
-           .when('/timeline', {
-                templateUrl: 'app/views/pages/timeline.html',
-                controller: 'timeline',
-            })
-
-
            .when('/x', {
                 templateUrl: 'app/views/pages/x.html',
                 controller: 'SearchCtrl',
@@ -89,7 +83,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
             // Route: Get one cultural object
             .when('/object/:id', {
                 templateUrl: 'app/views/pages/objects/object.html',
-                controller: 'showObjectsByCreatorCtrl',
+                controller: 'showObjectCtrl',
                 controllerAs: 'objectshow'
             })
 
