@@ -567,6 +567,23 @@ module.exports = function (router) {
         story.save();
     });
 
+    router.post('/editstory', function(req, res) {
+        console.log(req);
+        return req;
+        Story.findOne({ _id: req.params.id }, function (err, story) {
+            if (err) {
+                throw (err);
+            } else {
+                // Don't always return success, check to make sure the story exists first before returning it.
+                if (!story) {
+                    res.json({ success: false, message: 'That story was not found.' });
+                } else {
+                    res.json({ success: true, story: story });
+                }
+            }
+        });
+    });
+
           router.put('/addstory', function (req, res) {
         // var storyToAdd = req.params.id;
         var UserOfStory = req.body._id;

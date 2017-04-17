@@ -1,7 +1,7 @@
-angular.module('objectController', ['objectServices'])
+angular.module('objectController', ['objectServices', 'storyServices'])
 
     // Create a cultural object
-    .controller('createObjectCtrl', function ($http, $location, Object) {
+    .controller('createObjectCtrl', function ($http, $location, Object, Story) {
 
         var app = this; // successMsg can be accessed outside the scope
         this.createObject = function (objectData) {
@@ -21,8 +21,7 @@ angular.module('objectController', ['objectServices'])
     })
 
     // Show all cultural objects
-    .controller('allObjectCtrl', function (Object, $scope, $http, $location, filterFilter, $routeParams) {
-
+    .controller('allObjectCtrl', function (Object, Story, $scope, $http, $location, filterFilter, $routeParams) {
         var app = this;
 
         var uniqueItems = function (data, key) {
@@ -200,6 +199,24 @@ angular.module('objectController', ['objectServices'])
                 $scope.like.userVotes = 1;
                 $scope.like.votes++;
             }
+        }
+
+        $scope.objectId = $routeParams.id;
+        $scope.saveImage = function(imgUrl, objectId) {
+            var data = {
+                id: objectId,
+                imgUrl: imgUrl
+            };
+
+            Story.editStory(data, function (response) {
+              console.log(response);
+              // if (data.data.success) {
+              //   app.successMsg = data.data.message;
+              //   $location.path('/createstory');
+              // } else {
+              //   app.errorMsg = data.data.message;
+              // }
+            });
         }
 
         // $scope.fcia = function () {

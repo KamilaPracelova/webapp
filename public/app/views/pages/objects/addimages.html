@@ -1,0 +1,103 @@
+<style>
+    body {
+        margin-top: 100px;
+    }
+
+    img.selected {
+		border: 15px solid black;
+    }
+</style>
+
+<!-- Portfolio Item Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Všetky umelecké objekty
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+
+<!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">-->
+<div class="col-md-2">
+    <div class="container">
+
+        <form role="form">
+            <div class="row">
+                <div class="col-md-2">
+                    <fieldset>
+                        <legend>
+                            Autor
+                        </legend>
+                        <div ng-repeat="creator in creatorGroup">
+                            <div class="checkbox">
+                                <input id="{{creator}}" type="checkbox" ng-model="useCreator[creator]" />
+                                <label for="{{creator}}">
+                                {{creator}}
+                                <span>({{ (filteredObjects | filter:query | filter:count('creator', creator)).length }})</span>
+                            </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+
+        <form role="form">
+            <div class="row">
+                <div class="col-md-2">
+                    <fieldset>
+                        <legend>
+                            Klasifikácia
+                        </legend>
+                        <div ng-repeat="classification in classificationGroup">
+                            <div class="checkbox">
+                                <input id="{{classification}}" type="checkbox" ng-model="useClassification[classification]" />
+                                <label for="{{classification}}">
+                                {{classification}}
+                                <span>({{ (filteredObjects | filter:query | filter:count('classification', classification)).length }})</span>
+                            </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+
+        <form role="form">
+            <div class="row">
+                <div class="col-md-2">
+                    <fieldset>
+                        <legend>
+                            Umiestnenie
+                        </legend>
+                        <div ng-repeat="placement in placementGroup">
+                            <div class="checkbox">
+                                <input id="{{placement}}" type="checkbox" ng-model="usePlacement[placement]" />
+                                <label for="{{placement}}">
+                                {{placement}}
+                                <span>({{ (filteredObjects | filter:query | filter:count('placement', placement)).length }})</span>
+                            </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-md-10">
+
+    <div id="columns">
+        <figure ng-repeat="object in filteredObjects | filter: searchFilterObject | filter: query | filter: searchObject">
+           <a href="#" ng-click="saveImage(object.media_object, objectId)"><img src="{{ object.media_object }}"></a>
+            <figcaption><b>{{ object.title }}</b></figcaption>
+            <figcaption><a href="/allobjects/{{ object.creator }}">{{ object.creator  }}</a></figcaption>
+        </figure>
+    </div>
+</div>
+
+<a href="#" ng-click="doVote()">
+    <i class="glyphicon" ng-class="(like.userVotes==1) ? 'glyphicon-heart' : 'glyphicon-heart-empty'"></i>
+    <span ng-model="like.votes">{{like.votes}}</span>
+</a>

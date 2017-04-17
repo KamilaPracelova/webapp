@@ -132,6 +132,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controllerAs: 'storyshow'
             })
 
+            // adding images to stories
+            .when('/story/:id/addImages', {
+                templateUrl: 'app/views/pages/objects/addimages.html',
+                controller: 'allObjectCtrl',
+                controllerAs: 'objectall'
+            })
+
             .when('/editstory/:id', {
                 templateUrl: 'app/views/pages/stories/editstory.html',
                 controller: 'editStoryCtrl',

@@ -9,7 +9,7 @@ var StorySchema = new Schema({
     story_subtitle: { type: String },
     story_description: { type: String },
     story_title_image: { type: String },
-
+    story_images: []
 });
 
 module.exports = mongoose.model('Story', StorySchema); // Export User Model for us in API

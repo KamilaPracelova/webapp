@@ -49,6 +49,7 @@ angular.module('storyController', ['storyServices'])
         $scope.storySubtitle = data.data.story.story_subtitle;
         $scope.storyDescription = data.data.story.story_description;
         $scope.storyTitleImage = data.data.story.story_title_image;
+        $scope.storyId = data.data.story._id;
       }
       else {
         console.log('fuck');

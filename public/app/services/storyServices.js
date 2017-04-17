@@ -24,10 +24,10 @@ angular.module('storyServices', [])
             return $http.get('/api/story/' + id);
         };
 
-        //     // Edit a story
-        // storyFactory.editStory = function(id) {
-        //     return $http.get('/api/editstory/' + id);
-        // };
+        // Edit a story
+        storyFactory.editStory = function (storyData) {
+            return $http.post('/api/editstory', storyData);
+        };
 
         return storyFactory; // Return storyFactory object
     });
