@@ -8,7 +8,7 @@ angular.module('storyServices', [])
             return $http.post('/api/createstory', storyData);
         };
 
-        storyFactory.editStory = function(storyData) {
+        storyFactory.editStory = function (storyData) {
             return $http.post('/api/editstory', storyData);
         };
 

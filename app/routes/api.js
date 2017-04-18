@@ -566,13 +566,16 @@ module.exports = function (router) {
         story.save();
     });
 
+    // adding images to a story
     router.post('/editstory', function(req, res) {
         Story.findOneAndUpdate(
             {"_id": req.body.id},
             {$push: {"story_images": req.body.imgUrl}},
             function(err, response) {
                 if (!err) {
-                    res.json({ success: true });
+                    res.json({ status: true });
+                } else {
+                    res.json({ status: false, error: err })
                 }
             }
         );

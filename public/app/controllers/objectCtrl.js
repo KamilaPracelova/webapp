@@ -208,13 +208,13 @@ angular.module('objectController', ['objectServices', 'storyServices'])
                 imgUrl: imgUrl
             };
 
-            Story.editStory(data, function (response) {
-              if (data.data.success) {
-                app.successMsg = data.data.message;
-                // $location.path('/story/' + objectId);
-              } else {
-                app.errorMsg = data.data.message;
-              }
+            Story.editStory(data).then(function(response) {
+                if (response.status === 200) {
+                    app.successMsg = data.data.message;
+                    // $location.path('/story/' + objectId);
+                } else {
+                    app.errorMsg = data.data.message;
+                }
             });
         }
 
