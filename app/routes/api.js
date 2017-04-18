@@ -559,7 +559,6 @@ module.exports = function (router) {
         story.story_subtitle = req.body.story_subtitle;
         story.story_description = req.body.story_description;
         story.story_title_image = req.body.story_title_image;
-        story.dogs.push({ name: 'Joe'});
         //story.user = user._id;
         //User.findOne({ username: req.body.username }).select('username').exec(function(err, user) {
         res.json({ success: true, message: 'story created' });
@@ -568,20 +567,15 @@ module.exports = function (router) {
     });
 
     router.post('/editstory', function(req, res) {
-        console.log(req);
-        return req;
-        Story.findOne({ _id: req.params.id }, function (err, story) {
-            if (err) {
-                throw (err);
-            } else {
-                // Don't always return success, check to make sure the story exists first before returning it.
-                if (!story) {
-                    res.json({ success: false, message: 'That story was not found.' });
-                } else {
-                    res.json({ success: true, story: story });
+        Story.findOneAndUpdate(
+            {"_id": req.body.id},
+            {$push: {"story_images": req.body.imgUrl}},
+            function(err, response) {
+                if (!err) {
+                    res.json({ success: true });
                 }
             }
-        });
+        );
     });
 
           router.put('/addstory', function (req, res) {

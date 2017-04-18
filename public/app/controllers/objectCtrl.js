@@ -209,13 +209,12 @@ angular.module('objectController', ['objectServices', 'storyServices'])
             };
 
             Story.editStory(data, function (response) {
-              console.log(response);
-              // if (data.data.success) {
-              //   app.successMsg = data.data.message;
-              //   $location.path('/createstory');
-              // } else {
-              //   app.errorMsg = data.data.message;
-              // }
+              if (data.data.success) {
+                app.successMsg = data.data.message;
+                // $location.path('/story/' + objectId);
+              } else {
+                app.errorMsg = data.data.message;
+              }
             });
         }
 

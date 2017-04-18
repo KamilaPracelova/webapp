@@ -8,6 +8,10 @@ angular.module('storyServices', [])
             return $http.post('/api/createstory', storyData);
         };
 
+        storyFactory.editStory = function(storyData) {
+            return $http.post('/api/editstory', storyData);
+        };
+
                 // Register story in database
         storyFactory.createDog = function (dogData) {
             return $http.post('/api/createdog', dogData);
@@ -22,11 +26,6 @@ angular.module('storyServices', [])
         // Edit a story
         storyFactory.getStory = function (id) {
             return $http.get('/api/story/' + id);
-        };
-
-        // Edit a story
-        storyFactory.editStory = function (storyData) {
-            return $http.post('/api/editstory', storyData);
         };
 
         return storyFactory; // Return storyFactory object
