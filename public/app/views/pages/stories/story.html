@@ -31,10 +31,11 @@
                             <div class="carousel slide" id="myCarousel">
                                 <!-- Carousel items -->
                                 <div class="carousel-inner">
-                                    <div class="active item" data-slide-number="0">
-                                        <img src="https://lh4.ggpht.com/M1XTibfCgpi5pgjSDb7kXDh21N8fpn-8evzQVAX-qGFhSyArDmSuCAv1pjVp4jbAt_g=h900">
+                                    <div ng-class="{ 'active' : !$index }" class="item" data-slide-number="{{$index}}" ng-repeat="image in images track by $index" >
+                                        <img src="{{image}}">
                                     </div>
                                 </div>
+
                                 <!-- Carousel nav -->
                                 <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                                     <span class="glyphicon glyphicon-chevron-left"></span>

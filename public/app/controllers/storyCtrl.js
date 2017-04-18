@@ -43,16 +43,17 @@ angular.module('storyController', ['storyServices'])
 
     Story.getStory($routeParams.id).then(function (data) {
       if (data.data.success) {
-        console.log($routeParams.id);
-        console.log(data);
-        $scope.storyTitle = data.data.story.story_title;
-        $scope.storySubtitle = data.data.story.story_subtitle;
-        $scope.storyDescription = data.data.story.story_description;
-        $scope.storyTitleImage = data.data.story.story_title_image;
-        $scope.storyId = data.data.story._id;
+        let story = data.data.story;
+
+        $scope.storyTitle = story.story_title;
+        $scope.storySubtitle = story.story_subtitle;
+        $scope.storyDescription = story.story_description;
+        $scope.storyTitleImage = story.story_title_image;
+        $scope.storyId = story._id;
+        $scope.images = story.story_images;
       }
       else {
-        console.log('fuck');
+        console.log('fuck'); // rofl xD
       }
     })
   })
