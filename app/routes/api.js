@@ -553,7 +553,7 @@ module.exports = function (router) {
 
     // get the currently logged in user
     router.get('/getCurrentUser', function(req, res) {
-        let username = req.decoded.username;
+        var username = req.decoded.username;
         User.findOne({username: username}, function(err, user) {
             if (!err) {
                 // return a success response
@@ -567,8 +567,8 @@ module.exports = function (router) {
     // Route to create a story
     router.post('/createstory', function (req, res) {
         // get the username first
-        let username = req.decoded.username;
-        let userId;
+        var username = req.decoded.username;
+        var userId;
         User.findOne({username: username}, function(err, user) {
             if (!err) {
                 // get the user id for association
@@ -635,7 +635,7 @@ module.exports = function (router) {
     });
 
     router.get('/allstoriesForUser', function(req, res) {
-        let username = req.decoded.username;
+        var username = req.decoded.username;
 
         User.findOne({username: username}, function(err, user) {
             if (!err) {
@@ -650,9 +650,6 @@ module.exports = function (router) {
                 res.json({ success: false, message: 'no user logged in / found' })
             }
         });
-        // Story.find({user_id: req.body.id}, function(err, stories) {
-        //     console.log(stories);
-        // });
     });
 
 
