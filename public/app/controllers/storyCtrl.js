@@ -1,4 +1,4 @@
-angular.module('storyController', ['storyServices'])
+angular.module('storyController', ['storyServices', 'userServices'])
 
   .controller('createStoryCtrl', function ($http, $location, Story, User) {
 
@@ -20,18 +20,24 @@ angular.module('storyController', ['storyServices'])
   })
 
 
-  .controller('allStoryCtrl', function (Story, $scope, $http, $location) {
-
+  .controller('allStoryCtrl', function (Story, $scope, $http, $location, User) {
     var app = this;
-    function getAllStories() {
-      Story.getAllStories().then(function (data) {
-        if (data.data.success) {
-          app.stories = data.data.stories;
-          console.log(data);
-        }
+
+    function getAllStoriesForUser() {
+      User.getCurrentUser().then(function(response) {
+        // get the logged in user
+        let userId = response.data.user._id;
+
+        // get the stories for a user
+        Story.getAllStoriesForUser(userId).then(function(response) {
+          if (response.data.success) {
+            app.stories = response.data.stories;
+          }
+        });
       });
     }
-    getAllStories()
+
+    getAllStoriesForUser();
   })
 
   .controller('showStoryCtrl', function (Story, $scope, $routeParams) {

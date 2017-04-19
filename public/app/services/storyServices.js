@@ -23,6 +23,11 @@ angular.module('storyServices', [])
             return $http.get('/api/allstories/');
         };
 
+        // get all stories for a specified user (id)
+        storyFactory.getAllStoriesForUser = function (id) {
+            return $http.get('/api/allstoriesForUser/');
+        };
+
         // Edit a story
         storyFactory.getStory = function (id) {
             return $http.get('/api/story/' + id);

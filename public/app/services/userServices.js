@@ -38,6 +38,10 @@ angular.module('userServices', [])
         return $http.get('/api/edit/' + id);
     };
 
+    userFactory.getCurrentUser = function() {
+        return $http.get('/api/getCurrentUser');
+    }
+
     // Delete a user
     userFactory.deleteUser = function(username) {
         return $http.delete('/api/management/' + username);

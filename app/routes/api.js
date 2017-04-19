@@ -551,6 +551,19 @@ module.exports = function (router) {
         });
     });
 
+    // get the currently logged in user
+    router.get('/getCurrentUser', function(req, res) {
+        let username = req.decoded.username;
+        User.findOne({username: username}, function(err, user) {
+            if (!err) {
+                // return a success response
+                res.json({ success: true, user: user });
+            } else {
+                res.json({ success: false, message: 'could not find a user' });
+            }
+        });
+    });
+
     // Route to create a story
     router.post('/createstory', function (req, res) {
         // get the username first
@@ -616,9 +629,30 @@ module.exports = function (router) {
             if (err) throw err;
             else {
                 res.json({ success: true, stories: stories });
-                //res.send(stories); 
+                //res.send(stories);
             }
         });
+    });
+
+    router.get('/allstoriesForUser', function(req, res) {
+        let username = req.decoded.username;
+
+        User.findOne({username: username}, function(err, user) {
+            if (!err) {
+                Story.find({user_id: user._id}, function(err, stories) {
+                    if (!err) {
+                        res.json({ success: true, stories: stories });
+                    } else {
+                        res.json({ success: false, message: 'error retrieving recipes' })
+                    }
+                });
+            } else {
+                res.json({ success: false, message: 'no user logged in / found' })
+            }
+        });
+        // Story.find({user_id: req.body.id}, function(err, stories) {
+        //     console.log(stories);
+        // });
     });
 
 
