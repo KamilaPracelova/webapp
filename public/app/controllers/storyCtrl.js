@@ -8,10 +8,7 @@ angular.module('storyController', ['storyServices'])
 
     this.createStory = function (storyData) {
       app.errorMsg = false; // nezobrazuje errorMsg na stranke
-      console.log(this.storyData);
       Story.createStory(app.storyData).then(function (data) {
-        console.log(data.data.success);
-        console.log(data.data.message);
         if (data.data.success) {
           app.successMsg = data.data.message;
           $location.path('/createstory');

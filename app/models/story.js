@@ -5,6 +5,7 @@ var titlize = require('mongoose-title-case'); // Import Mongoose Title Case Plug
 var validate = require('mongoose-validator'); // Import Mongoose Validator Plugin
 
 var StorySchema = new Schema({
+	user_id: { type: String },
     story_title: { type: String },
     story_subtitle: { type: String },
     story_description: { type: String },

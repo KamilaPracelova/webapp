@@ -553,17 +553,29 @@ module.exports = function (router) {
 
     // Route to create a story
     router.post('/createstory', function (req, res) {
-        var story = new Story(); // Create new User object
-        //story.user = req.body.id;
-        story.story_title = req.body.story_title; // Save username from request to User object
-        story.story_subtitle = req.body.story_subtitle;
-        story.story_description = req.body.story_description;
-        story.story_title_image = req.body.story_title_image;
-        //story.user = user._id;
-        //User.findOne({ username: req.body.username }).select('username').exec(function(err, user) {
-        res.json({ success: true, message: 'story created' });
-        //user.story.push({email: 'Daasds'});
-        story.save();
+        // get the username first
+        let username = req.decoded.username;
+        let userId;
+        User.findOne({username: username}, function(err, user) {
+            if (!err) {
+                // get the user id for association
+                userId = user._id;
+
+                // scaffold the new story object
+                var story = new Story();
+                story.user_id = userId;
+                story.story_title = req.body.story_title;
+                story.story_subtitle = req.body.story_subtitle;
+                story.story_description = req.body.story_description;
+                story.story_title_image = req.body.story_title_image;
+                story.save();
+
+                // return a success response
+                res.json({ success: true, message: 'story created' });
+            } else {
+                res.json({ success: false, message: 'could not find a user' });
+            }
+        });
     });
 
     // adding images to a story
