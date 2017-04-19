@@ -125,6 +125,12 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controllerAs: 'storyall'
             })
 
+            .when('/mystories', {
+                templateUrl: 'app/views/pages/stories/mystories.html',
+                controller: 'myStoriesCtrl',
+                controllerAs: 'storyall'
+            })
+
             // Route: About Us (for testing purposes)
             .when('/story/:id', {
                 templateUrl: 'app/views/pages/stories/story.html',

@@ -23,6 +23,23 @@ angular.module('storyController', ['storyServices', 'userServices'])
   .controller('allStoryCtrl', function (Story, $scope, $http, $location, User) {
     var app = this;
 
+    function getAllStories() {
+        // get the stories for a user
+        Story.getAllStories().then(function(response) {
+          console.log(response.data);
+
+          if (response.data.success) {
+            app.stories = response.data.stories;
+          }
+        });
+    }
+
+    getAllStories();
+  })
+
+  .controller('myStoriesCtrl', function(Story, $scope, $http, $location, User) {
+    var app = this;
+
     function getAllStoriesForUser() {
         // get the stories for a user
         Story.getAllStoriesForUser().then(function(response) {
