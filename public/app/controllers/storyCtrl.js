@@ -24,17 +24,12 @@ angular.module('storyController', ['storyServices', 'userServices'])
     var app = this;
 
     function getAllStoriesForUser() {
-      User.getCurrentUser().then(function(response) {
-        // get the logged in user
-        let userId = response.data.user._id;
-
         // get the stories for a user
-        Story.getAllStoriesForUser(userId).then(function(response) {
+        Story.getAllStoriesForUser().then(function(response) {
           if (response.data.success) {
             app.stories = response.data.stories;
           }
         });
-      });
     }
 
     getAllStoriesForUser();
